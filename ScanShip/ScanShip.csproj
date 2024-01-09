@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Product>ScanShip</Product>
+        <Description>Scan all the scrap in the ship with the "scan" terminal command.</Description>
+        <Version>0.0.0</Version>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>latest</LangVersion>
+        <PackageId>ScanShip</PackageId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' And '$(PublishDir)' != '' ">
+        <AssemblyLocationNamePlural>$([System.IO.Directory]::GetParent($(PublishDir)).name)</AssemblyLocationNamePlural>
+        <AssemblyLocationNameSingular>$(AssemblyLocationNamePlural.Substring(0, $([MSBuild]::Subtract($(AssemblyLocationNamePlural.Length), 1))))</AssemblyLocationNameSingular>
+        <AssemblyLocationNameTitle>$([System.String]::Concat($(AssemblyLocationNameSingular.Substring(0, 1).ToUpper()), $(AssemblyLocationNameSingular.Substring(1, $([MSBuild]::Subtract($(AssemblyLocationNameSingular.Length), 1))))))</AssemblyLocationNameTitle>
+        <AssemblyName>$(Product)$(AssemblyLocationNameTitle)-$([System.DateTime]::Now.Ticks)</AssemblyName>
+        <DebugType>Full</DebugType>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
+        <PackageReference Include="BepInEx.Core" Version="5.*"/>
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.Netcode.Runtime">
+            <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
+        </Reference>
+        <Reference Include="LethalAPI.Terminal">
+            <HintPath>lib\LethalAPI.Terminal.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+    <Target Name="DeleteMe" AfterTargets="Publish">
+        <ItemGroup>
+            <DeleteMe
+                    Include="$(PublishDir)*.dll; $(PublishDir)*.deps.json"
+                    Exclude="$(PublishDir)$(AssemblyName).dll"
+            />
+        </ItemGroup>
+        <Delete Files="@(DeleteMe)"/>
+    </Target>
+</Project>
