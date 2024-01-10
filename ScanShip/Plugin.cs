@@ -2,6 +2,7 @@
 using LethalAPI.LibTerminal;
 using LethalAPI.LibTerminal.Models;
 using ScanShip.Commands;
+using UnityEngine;
 
 namespace ScanShip
 {
@@ -13,6 +14,8 @@ namespace ScanShip
 
         private void Awake()
         {
+            this.gameObject.hideFlags = HideFlags.HideAndDontSave;
+            
             this.commandRegistry = TerminalRegistry.CreateTerminalRegistry();
             this.commandRegistry.RegisterFrom<ScanCommand>();
         }
