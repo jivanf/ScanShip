@@ -1,6 +1,6 @@
 ﻿<component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ScanShip (Plugins)" type="DotNetFolderPublish" factoryName="Publish to folder">
-    <riderPublish configuration="Debug" platform="Any CPU" runtime="Portable" target_folder="$USER_HOME$/AppData/Roaming/Thunderstore Mod Manager/DataFolder/LethalCompany/profiles/Default/BepInEx/plugins/jivanf-ScanShipLandmines" target_framework="netstandard2.1" uuid_high="6303636740060366075" uuid_low="-7647571452605349439" />
+    <riderPublish configuration="Release" platform="Any CPU" runtime="Portable" target_folder="$USER_HOME$/AppData/Roaming/Thunderstore Mod Manager/DataFolder/LethalCompany/profiles/Default/BepInEx/plugins/jivanf-ScanShip" target_framework="netstandard2.1" uuid_high="6303636740060366075" uuid_low="-7647571452605349439" />
     <method v="2" />
   </configuration>
 </component>
