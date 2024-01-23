@@ -48,11 +48,44 @@
 
 	<Target Name="DeleteArtifacts" AfterTargets="Publish">
 		<ItemGroup>
-			<Artifacts
+			<DefaultArtifacts
 				Include="$(PublishDir)*.dll; $(PublishDir)*.deps.json"
 				Exclude="$(PublishDir)$(AssemblyName).dll"
             />
+			<ReleaseArtifacts
+				Condition="'$(Configuration)' == 'Release'"
+				Include="$(PublishDir)*.pdb"
+			/>
 		</ItemGroup>
-		<Delete Files="@(Artifacts)"/>
+		<Delete Files="@(DefaultArtifacts); @(ReleaseArtifacts)"/>
+	</Target>
+
+	<Target Name="CreateThunderstoreZipArchive" Condition="'$(Configuration)' == 'Release'" AfterTargets="DeleteArtifacts">
+		<PropertyGroup>
+			<PackageDir>$(ProjectDir)pkg\</PackageDir>
+			<ThunderstoreDir>$(ProjectDir)dist\thunderstore\</ThunderstoreDir>
+		</PropertyGroup>
+
+		<ItemGroup>
+			<PackageFiles
+				Include="$(SolutionDir)assets\icon.png; $(SolutionDir)assets\manifest.json; $(SolutionDir)README.md; $(SolutionDir)CHANGELOG.md; $(PublishDir)$(AssemblyName).dll"
+			/>
+		</ItemGroup>
+
+		<MakeDir Directories="$(PackageDir); $(ThunderstoreDir)"></MakeDir>
+		<Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(PackageDir)" SkipUnchangedFiles="true" />
+
+		<ZipDirectory
+			SourceDirectory="$(PackageDir)"
+			DestinationFile="$(ThunderstoreDir)$(AssemblyName).zip"
+			Overwrite="true"
+		/>
+
+		<Unzip
+			SourceFiles="$(ThunderstoreDir)\$(AssemblyName).zip"
+			DestinationFolder="$(PublishDir)"
+		/>
+
+		<RemoveDir Directories="$(PackageDir)" />
 	</Target>
 </Project>
