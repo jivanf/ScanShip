@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using LethalAPI.LibTerminal.Attributes;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ScanShip.Commands;
@@ -9,12 +10,12 @@ public class ScanCommand
     [TerminalCommand("Scan", true)]
     public string Scan(string location)
     {
-        if (location != "ship")
+        if (location.ToLower() != "ship")
         {
             return null;
         }
 
-        var scrapObjectsInShip = Object
+        List<GrabbableObject> scrapObjectsInShip = Object
             .FindObjectsOfType<GrabbableObject>()
             .Where(scrapObject => scrapObject.itemProperties.isScrap && scrapObject.isInShipRoom)
             .ToList();
