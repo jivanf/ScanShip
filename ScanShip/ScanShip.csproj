@@ -8,6 +8,7 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<PackageId>ScanShip</PackageId>
+		<GenerateDependencyFile>False</GenerateDependencyFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' And '$(PublishDir)' != '' ">
@@ -29,36 +30,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="Assembly-CSharp">
+		<Reference Include="Assembly-CSharp" Private="False">
 			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
 		</Reference>
-		<Reference Include="UnityEngine">
+		<Reference Include="UnityEngine" Private="False">
 			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
 		</Reference>
-		<Reference Include="UnityEngine.CoreModule">
+		<Reference Include="UnityEngine.CoreModule" Private="False">
 			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
 		</Reference>
-		<Reference Include="Unity.Netcode.Runtime">
+		<Reference Include="Unity.Netcode.Runtime" Private="False">
 			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
 		</Reference>
-		<Reference Include="LethalAPI.Terminal">
+		<Reference Include="LethalAPI.Terminal" Private="False">
 			<HintPath>lib\LethalAPI.Terminal.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-
-	<Target Name="DeleteArtifacts" AfterTargets="Publish">
-		<ItemGroup>
-			<DefaultArtifacts
-				Include="$(PublishDir)*.dll; $(PublishDir)*.deps.json"
-				Exclude="$(PublishDir)$(AssemblyName).dll"
-            />
-			<ReleaseArtifacts
-				Condition="'$(Configuration)' == 'Release'"
-				Include="$(PublishDir)*.pdb"
-			/>
-		</ItemGroup>
-		<Delete Files="@(DefaultArtifacts); @(ReleaseArtifacts)"/>
-	</Target>
 
 	<Target Name="CreateThunderstoreZipArchive" Condition="'$(Configuration)' == 'Release'" AfterTargets="DeleteArtifacts">
 		<PropertyGroup>
@@ -72,7 +59,7 @@
 			/>
 		</ItemGroup>
 
-		<MakeDir Directories="$(PackageDir); $(ThunderstoreDir)"></MakeDir>
+		<MakeDir Directories="$(PackageDir); $(ThunderstoreDir)" />
 		<Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(PackageDir)" SkipUnchangedFiles="true" />
 
 		<ZipDirectory
