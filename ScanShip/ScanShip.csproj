@@ -30,21 +30,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="Assembly-CSharp" Private="False">
-			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine" Private="False">
-			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
-		</Reference>
-		<Reference Include="UnityEngine.CoreModule" Private="False">
-			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-		</Reference>
-		<Reference Include="Unity.Netcode.Runtime" Private="False">
-			<HintPath>C:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
-		</Reference>
-		<Reference Include="LethalAPI.Terminal" Private="False">
-			<HintPath>lib\LethalAPI.Terminal.dll</HintPath>
-		</Reference>
+		<Reference Include="Assembly-CSharp" HintPath="$(LC_REFERENCES)\Assembly-CSharp.dll" Private="False" />
+		<Reference Include="UnityEngine" HintPath="$(LC_REFERENCES)\UnityEngine.dll" Private="False" />
+		<Reference Include="UnityEngine.CoreModule" HintPath="$(LC_REFERENCES)\UnityEngine.CoreModule.dll" Private="False" />
+		<Reference Include="Unity.Netcode.Runtime" HintPath="$(LC_REFERENCES)\Unity.Netcode.Runtime.dll" Private="False" />
+		<Reference Include="LethalAPI.Terminal" HintPath="lib\LethalAPI.Terminal.dll" Private="False" />
 	</ItemGroup>
 
 	<Target Name="CreateThunderstoreZipArchive" Condition="'$(Configuration)' == 'Release'" AfterTargets="DeleteArtifacts">
